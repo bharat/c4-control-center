@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+body {
+  background: rgba(35, 35, 25, 1);
+  padding: 1em;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: rgba(220, 222, 224, .7);
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+a {
+  color: rgb(255, 255, 255, 1);
+}
+
+div.entry {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  grid-gap: .1em;
+
+  background: rgba(255, 255, 255, .1);
+  font-size: 96px;
+  margin: .15em;
+  padding: .2em;
+}
+
+div.entry div.image {
+  grid-row-start: 1;
+  grid-column-start: 2;
+  grid-row-end: 3;
+  grid-column-end: 3;
+}
+
+div.entry div.image img {
+  width: 100%;
+}
+
+div.entry div.title {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  grid-column-end: 2;
+
+  font-weight: bolder;
+  font-size: 72px; /* M */
+}
+
+div.entry div.status {
+  grid-row-start: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
+
+  font-size: 48px; /* S */
+}
+
+.filter-red {
+  filter: brightness(0) saturate(100%) invert(11%) sepia(85%) saturate(7494%) hue-rotate(1deg) brightness(102%) contrast(111%);
+}
+
+.filter-green {
+  filter: brightness(0) saturate(100%) invert(71%) sepia(20%) saturate(4477%) hue-rotate(44deg) brightness(96%) contrast(97%);
+}
+
+.filter-white {
+  filter: brightness(0) saturate(100%) invert(98%) sepia(100%) saturate(1%) hue-rotate(298deg) brightness(102%) contrast(101%);
+}
+
+#actions {
+  font-size: 48px;
+  margin: .15em;
+  padding: .2em;
+}
+
+div.action {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+
+  float: right;
+  width: 180px;
+  padding-bottom: 1em;
+  padding-right: 1em;
+}
+
+div.action img {
+  width: 90px;
+}
+
+div.action a {
+  font-size: 32px;
+}

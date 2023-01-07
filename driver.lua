@@ -1,14 +1,46 @@
--- TODO(bharat): add a timer to turn off debug after a reasonable interval
-
 do -- globals
-  if (C4.GetDriverConfigInfo) then
-    VERSION = C4:GetDriverConfigInfo ("version")
-  else
-    VERSION = "Incompatible with this OS"
-  end
-  C4:AddVariable("STATE", "", "STRING")
 end
 
+function OnDriverInit(driverInitType)
+   dbg("OnDriverInit(" .. driverInitType .. ")")
+
+   for k, v in pairs(Properties) do
+      OnPropertyChanged(k)
+   end
+end
+
+function OnDriverLateInit(driverInitType)
+   dbg("OnDriverLateInit(" .. driverInitType .. ")")
+
+   C4:UpdateProperty("Driver Version", C4:GetDriverConfigInfo("version"))
+end
+
+function OnDriverDestroyed(driverInitType)
+   dbg("OnDriverDestroyed(" .. driverInitType .. ")")
+end
+
+function ExecuteCommand(strCommand, tParams)
+   dbg("ExecuteCommand(" .. strCommand .. ", " .. dump(tParams) .. ")")
+
+   if strCommand == "Set Entry" then
+      C4:SendDataToUI("SET_ENTRY", tParams)
+   elseif strCommand == "Request Update" then
+      C4:FireEvent("Update Requested")
+   end
+end
+
+
+function OnVariableChanged(sVariable)
+   dbg("OnVariableChanged(" .. sVariable .. ")")
+end
+
+
+function OnPropertyChanged(sProperty)
+   local value = Properties[sProperty] or ""
+   dbg("OnPropertyChanged(" .. sProperty .. "), new value: " .. value)
+end
+
+-- Utility functions
 
 function dbg(msg, ...)
    if Properties["Debug Mode"] == "On" then
@@ -16,42 +48,16 @@ function dbg(msg, ...)
    end
 end
 
-function ExecuteCommand(strCommand, tParams)
-   dbg("ExecuteCommand function called with : " .. strCommand)
-
-   if strCommand == "Set State" then
-      dbg("Set state to '" .. tParams.state .. "' (x)")
-      UpdateState(tParams.state)
+function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
    end
 end
 
-
-function OnVariableChanged(sVariable)
-   dbg("OnVariableChanged(" .. sVariable .. ")")
-   if (sVariable == "STATE") then
-      UpdateState(Variables["State"])
-   end
-end
-
-
-function OnPropertyChanged(sProperty)
-   dbg("OnPropertyChanged(" .. sProperty .. "), new value is " .. Properties["Select State Now"])
-   if sProperty == "Select State Now" then
-      UpdateState(Properties["Select State Now"])
-   end
-end
-
-
-function UpdateState(sNewState)
-   C4:UpdateProperty("Current State", sNewState)
-   C4:SetVariable("STATE", sNewState)
-   UpdateIcon()
-end
-
-
-function UpdateIcon()
-   dbg("UpdateIcon()")
-   local state = Variables["STATE"]
-   C4:FireEvent(state)
-   C4:SendToProxy(5001, "ICON_CHANGED", {icon=state, icon_description=state})
-end
