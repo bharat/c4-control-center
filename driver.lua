@@ -1,10 +1,10 @@
-do -- globals
-end
+-- luacheck: ignore dbg dump ReplaceVariables GetVar
+-- luacheck: ignore pairs type tostring
 
 function OnDriverInit(driverInitType)
    dbg("OnDriverInit(" .. driverInitType .. ")")
 
-   for k, v in pairs(Properties) do
+   for k, _ in pairs(Properties) do
       OnPropertyChanged(k)
    end
 end
@@ -23,12 +23,32 @@ function ExecuteCommand(strCommand, tParams)
    dbg("ExecuteCommand(" .. strCommand .. ", " .. dump(tParams) .. ")")
 
    if strCommand == "Set Entry" then
-      C4:SendDataToUI("SET_ENTRY", tParams)
+      local params = {
+	 id = tParams["id"],
+	 title = tParams["title"],
+	 status = ReplaceVariables(tParams["status"]),
+	 state = tParams["state"]
+      }
+      C4:SendDataToUI("SET_ENTRY", params)
    elseif strCommand == "Request Update" then
       C4:FireEvent("Update Requested")
    end
 end
 
+function ReplaceVariables(val)
+   return string.gsub(val, "${([^}]+)-&gt;([^}]+)-&gt;([^}]+)}", GetVar)
+end
+
+function GetVar(roomName, deviceName, varName)
+   for deviceId, _ in pairs(C4:GetDevicesByName(deviceName, roomName)) do
+      for _, varT in pairs(C4:GetDeviceVariables(deviceId)) do
+	 if varT["name"] == varName then
+	    return varT["value"]
+	 end
+      end
+   end
+   return nil
+end
 
 function OnVariableChanged(sVariable)
    dbg("OnVariableChanged(" .. sVariable .. ")")

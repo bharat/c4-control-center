@@ -10,7 +10,7 @@ update-version:
 	perl -pi -e 's|^  <modified>\K([^<]*)|chomp($$v = `date "+%D %r"`); $$v|e' driver.xml
 
 pack:
-	rm ~/Documents/Control4/Drivers/control-center.c4z
+	-rm ~/Documents/Control4/Drivers/control-center.c4z
 	zip -r \
 		--exclude=.git/\* \
 		--exclude=.gitignore \

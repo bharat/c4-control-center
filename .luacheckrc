@@ -13,12 +13,10 @@ std = {
 
       -- Driver callbacks
       "ExecuteCommand",
-      "OnVariableChanged",
+      "OnDriverDestroyed",
+      "OnDriverInit",
+      "OnDriverLateInit",
       "OnPropertyChanged",
-
-      -- Locally defined functions
-      "dbg",
-      "UpdateState",
-      "UpdateIcon",
+      "OnVariableChanged",
    },
 }
