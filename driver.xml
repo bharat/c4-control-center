@@ -5,7 +5,7 @@
   <name>Control Center</name>
   <model>Control Center</model>
   <created>01/04/2023 12:00:00 PM</created>
-  <modified>02/01/23 11:07:33 AM</modified>
+  <modified>02/08/23 03:32:19 PM</modified>
   <version>37</version>
   <small image_source="c4z">control_center_16.png</small>
   <large image_source="c4z">control_center_32.png</large>
@@ -73,7 +73,7 @@
     </commands>
   </config>
   <capabilities>
-    <web_view_url proxybindingid="5001">controller://driver/control-center/index.html</web_view_url>
+    <web_view_url proxybindingid="5001">controller://driver/control-center/index.html?v=37</web_view_url>
     <mobile_web_view_enabled>true</mobile_web_view_enabled>
     <navigator_display_option proxybindingid="5001">
       <display_icons>

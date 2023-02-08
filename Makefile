@@ -8,6 +8,8 @@ lint:
 update-version:
 	perl -pi -e 's|^  <version>\K([^<]*)|$$1+1|e' driver.xml
 	perl -pi -e 's|^  <modified>\K([^<]*)|chomp($$v = `date "+%D %r"`); $$v|e' driver.xml
+	perl -pi -e 's|/index.html\?v=\K(\d+)|$$1+1|e' driver.xml
+	perl -pi -e 's|script.js\?v=\K(\d+)|$$1+1|e' www/index.html
 
 pack:
 	-rm ~/Documents/Control4/Drivers/control-center.c4z

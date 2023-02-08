@@ -62,11 +62,6 @@ function RequestUpdate() {
     C4.sendCommand('Request Update', '{}', true, true);
 }
 
-function RefreshData() {
-    var url = window.location.href.split('?')[0];
-    location.href = url + "?t=" + Date.now();
-}
-
 function init() {
     C4.sendCommand("GetState", "", false, false);
     C4.subscribeToDataToUi(true);
