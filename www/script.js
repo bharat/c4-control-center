@@ -130,6 +130,7 @@ function dev_init() {
 }
 
 function browser_diagnostics() {
+    console.log("URL: " + document.location.href);
     console.log("Window dimensions: [" + window.screen.width + "x" + window.screen.height + "]");
     console.log("User agent: " + navigator.userAgent);
 }

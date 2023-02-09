@@ -13,6 +13,14 @@ function OnDriverLateInit(driverInitType)
    dbg("OnDriverLateInit(" .. driverInitType .. ")")
 
    C4:UpdateProperty("Driver Version", C4:GetDriverConfigInfo("version"))
+
+   local version = C4:GetDriverConfigInfo("version")
+   C4:UpdateProperty("Driver Version", version)
+
+   local url = "controller://driver/control-center/index.html?v=" .. version
+   dbg("Setting URL to " .. url)
+
+   C4:SendToProxy(5001, "URL_CHANGED", {URL=url})
 end
 
 function OnDriverDestroyed(driverInitType)
