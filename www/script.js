@@ -60,6 +60,7 @@ function SetEntry(id, title, status, state) {
 
 function RequestUpdate() {
     C4.sendCommand('Request Update', '{}', true, true);
+    return false;
 }
 
 function init() {
